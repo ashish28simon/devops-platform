@@ -1,5 +1,5 @@
 resource "google_iam_workload_identity_pool" "github_pool" {
-  workload_identity_pool_id = "github-pool"
+  workload_identity_pool_id = "github-pool-1"
   display_name              = "GitHub Actions Pool"
   description               = "Identity pool for GitHub Actions"
   project                   = var.project_id
@@ -17,6 +17,8 @@ resource "google_iam_workload_identity_pool_provider" "github_provider" {
     issuer_uri = "https://token.actions.githubusercontent.com"
   }
 
+  attribute_condition = "assertion.repository == \"ashish28simon/devops-platform\""
+
   attribute_mapping = {
     "google.subject"       = "assertion.sub"
     "attribute.repository" = "assertion.repository"
@@ -28,5 +30,7 @@ resource "google_service_account_iam_member" "github_actions_binding" {
 
   role = "roles/iam.workloadIdentityUser"
 
-  member = "principalSet://iam.googleapis.com/projects/${var.project_id}/locations/global/workloadIdentityPools/github-pool/attribute.repository/${var.github_repo}"
+  member = "principalSet://iam.googleapis.com/projects/518343262348/locations/global/workloadIdentityPools/github-pool-1/attribute.repository/${var.github_repo}"
+
+  depends_on = [google_iam_workload_identity_pool_provider.github_provider]
 }
