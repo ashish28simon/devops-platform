@@ -5,6 +5,7 @@ on:
     paths:
       - terraform/**
       - environments/dev/terraform.tfvars
+      - .github/workflows/terraform.yml
 
 permissions:
   id-token: write
