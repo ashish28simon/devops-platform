@@ -40,5 +40,5 @@ module "gke" {
 
   network    = module.network.vpc_name
   subnetwork = module.network.subnet_name
-  node_service_account = module.iam.github_actions_sa_email
+  node_service_account = module.iam.service_account_email
 }
