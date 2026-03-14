@@ -48,6 +48,10 @@ jobs:
         --zone asia-south1-a \
         --project motocorp-simon
 
+    - name: Install GKE auth plugin
+      run: |
+        gcloud components install gke-gcloud-auth-plugin --quiet
+
     - name: Deploy to Kubernetes
       run: |
         kubectl apply -f k8s/patient-service/deployment.yaml
