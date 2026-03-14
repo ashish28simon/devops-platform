@@ -38,8 +38,7 @@ module "gke" {
   project_id = var.project_id
   zone       = var.zone
 
-  network    = module.network.vpc.name
-  subnetwork = module.network.subnet.name
-
-  node_service_account = module.iam.github_actions_sa.email
+  network    = module.network.vpc_name
+  subnetwork = module.network.subnet_name
+  node_service_account = module.iam.github_actions_sa_email
 }
