@@ -2,8 +2,9 @@ name: Build Push Deploy
 
 on:
   push:
-    branches:
-      - main
+    paths:
+      - patient-service/**
+      - k8s/patient-service/**
 
 jobs:
 
