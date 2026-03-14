@@ -5,6 +5,7 @@ on:
     paths:
       - patient-service/**
       - k8s/patient-service/**
+      - .github/workflows/build-push-deploy.yml
 
 jobs:
 
