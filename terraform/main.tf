@@ -31,3 +31,15 @@ module "workload_identity" {
   github_repo           = "ashish28simon/devops-platform"
   service_account_email = module.iam.service_account_email
 }
+
+module "gke" {
+  source = "../modules/gke"
+
+  project_id = var.project_id
+  zone       = var.zone
+
+  network    = module.network.vpc.name
+  subnetwork = module.network.subnet.name
+
+  node_service_account = module.iam.github_actions_sa.email
+}
