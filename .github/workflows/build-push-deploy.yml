@@ -54,9 +54,9 @@ jobs:
     
     - name: Deploy to GKE
       run: |
-        echo "Deploying image with tag: $IMAGE_TAG"
+        echo "Deploying image with tag: ${{ github.sha }}"
         kubectl set image deployment/patient-service \
-        patient-service=asia-south1-docker.pkg.dev/motocorp-simon/microservices-repo/patient-service:$IMAGE_TAG
+        patient-service=asia-south1-docker.pkg.dev/motocorp-simon/microservices-repo/patient-service:${{ github.sha }}
 
         kubectl rollout status deployment/patient-service
         
