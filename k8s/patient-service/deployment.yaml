@@ -18,7 +18,7 @@ spec:
       containers:
       - name: patient-service
 
-        image: asia-south1-docker.pkg.dev/motocorp-simon/microservices-repo/patient-service:<TAG>
+        image: asia-south1-docker.pkg.dev/motocorp-simon/microservices-repo/patient-service:${{ github.sha }}
 
         ports:
         - containerPort: 3000

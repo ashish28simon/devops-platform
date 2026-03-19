@@ -5,9 +5,7 @@ on:
     paths:
       - patient-service/**
       - k8s/patient-service/**
-      - .github/workflows/build-push-deploy.yml
-env:
-  IMAGE_TAG: ${{ github.sha }}      
+      - .github/workflows/build-push-deploy.yml   
 
 jobs:
 
@@ -38,11 +36,11 @@ jobs:
 
     - name: Build Docker image
       run: |
-        docker build -t asia-south1-docker.pkg.dev/motocorp-simon/microservices-repo/patient-service:${IMAGE_TAG} ./patient-service
+        docker build -t asia-south1-docker.pkg.dev/motocorp-simon/microservices-repo/patient-service:${{ github.sha }} ./patient-service
 
     - name: Push Docker image
       run: |
-        docker push asia-south1-docker.pkg.dev/motocorp-simon/microservices-repo/patient-service:${IMAGE_TAG}
+        docker push asia-south1-docker.pkg.dev/motocorp-simon/microservices-repo/patient-service:${{ github.sha }}
 
     - name: Get GKE credentials
       run: |
