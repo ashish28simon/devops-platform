@@ -38,7 +38,7 @@ jobs:
 
     - name: Build Docker image
       run: |
-        docker build -t asia-south1-docker.pkg.dev/motocorp-simon/microservices-repo/patient-service:${IMAGE_TAG} ./patient-service
+        docker build -t asia-south1-docker.pkg.dev/motocorp-simon/microservices-repo/patient-service:${IMAGE_TAG} .
 
     - name: Push Docker image
       run: |
