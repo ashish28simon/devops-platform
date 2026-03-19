@@ -56,6 +56,7 @@ jobs:
     
     - name: Deploy to GKE
       run: |
+        echo "Deploying image with tag: $IMAGE_TAG"
         kubectl set image deployment/patient-service \
         patient-service=asia-south1-docker.pkg.dev/motocorp-simon/microservices-repo/patient-service:${IMAGE_TAG}
 
