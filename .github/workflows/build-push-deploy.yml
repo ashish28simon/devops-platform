@@ -5,7 +5,10 @@ on:
     paths:
       - patient-service/**
       - k8s/patient-service/**
-      - .github/workflows/build-push-deploy.yml   
+      - .github/workflows/build-push-deploy.yml
+env:
+  IMAGE_TAG: ${{ github.sha }}
+
 
 jobs:
 
@@ -36,11 +39,11 @@ jobs:
 
     - name: Build Docker image
       run: |
-        docker build -t asia-south1-docker.pkg.dev/motocorp-simon/microservices-repo/patient-service:${{ github.sha }} ./patient-service
+        docker build -t asia-south1-docker.pkg.dev/motocorp-simon/microservices-repo/patient-service:$IMAGE_TAG ./patient-service
 
     - name: Push Docker image
       run: |
-        docker push asia-south1-docker.pkg.dev/motocorp-simon/microservices-repo/patient-service:${{ github.sha }}
+        docker push asia-south1-docker.pkg.dev/motocorp-simon/microservices-repo/patient-service:$IMAGE_TAG
 
     - name: Get GKE credentials
       run: |
@@ -51,17 +54,18 @@ jobs:
     - name: Install GKE auth plugin
       run: |
         gcloud components install gke-gcloud-auth-plugin --quiet
-    
-    - name: Deploy to GKE
-      run: |
-        echo "Deploying image with tag: ${{ github.sha }}"
-        kubectl set image deployment/patient-service \
-        patient-service=asia-south1-docker.pkg.dev/motocorp-simon/microservices-repo/patient-service:${{ github.sha }}
-
-        kubectl rollout status deployment/patient-service
+  
         
     - name: Deploy to Kubernetes
       run: |
         kubectl apply -f k8s/patient-service/deployment.yaml
         kubectl apply -f k8s/patient-service/service.yaml
         kubectl apply -f k8s/patient-service/ingress.yaml
+
+    - name: Deploy to GKE
+      run: |
+        echo "Deploying image with tag: ${IMAGE_TAG}"
+        kubectl set image deployment/patient-service \
+        patient-service=asia-south1-docker.pkg.dev/motocorp-simon/microservices-repo/patient-service:${IMAGE_TAG}
+
+        kubectl rollout status deployment/patient-service
